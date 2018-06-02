@@ -4,12 +4,31 @@
 
 # import the necessary packages
 from collections import deque
-from imutils.video import VideoStream
 import numpy as np
+import matplotlib.pyplot as plt
 import argparse
-import cv2
+import cv2   #pip3 install opencv-python
 import imutils
+from imutils.video import VideoStream
 import time
+import matplotlib.animation as animation
+
+
+def animate(i):
+    # pullData = open("sampleText.txt","r").read()
+    # dataArray = pullData.split('\n')
+    # xar = []
+    # yar = []
+    # for eachLine in dataArray:
+    #     if len(eachLine)>1:
+    #         x,y = eachLine.split(',')
+    #         xar.append(int(x))
+    #         yar.append(int(y))
+    # ax1.clear()
+    # ax1.plot(xar,yar)
+	ax1.plot(centers[0], centers[1])
+
+
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -37,6 +56,9 @@ else:
 
 # allow the camera or video file to warm up
 time.sleep(2.0)
+
+fig = plt.figure()
+ax1 = fig.add_subplot(1,1,1)
 
 # keep looping
 while True:
@@ -77,11 +99,13 @@ while True:
 		# it to compute the minimum enclosing circle and
 		# centroid
 		print(len(cnts))
+		centers = [[],[]]
 		for c in cnts:
 		#c = max(cnts, key=cv2.contourArea)
 			((x, y), radius) = cv2.minEnclosingCircle(c)
 			M = cv2.moments(c)
 			center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+
 			#print(center)
 
 			# only proceed if the radius meets a minimum size
@@ -91,7 +115,14 @@ while True:
 				cv2.circle(frame, (int(x), int(y)), int(radius),
 					(0, 255, 255), 2)
 				cv2.circle(frame, center, 5, (0, 0, 255), -1)
+				centers[0].append(center[0])
+				centers[1].append(center[1])
+	ani = animation.FuncAnimation(fig, animate, interval=1000)
+	ani
 
+	# 			plt.scatter(center[0], center[1])
+	# 			plt.pause(0.05)
+	# plt.show()
 	# update the points queue
 	# pts.appendleft(center)
     #
