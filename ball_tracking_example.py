@@ -13,23 +13,6 @@ from imutils.video import VideoStream
 import time
 import matplotlib.animation as animation
 
-
-def animate(i):
-    # pullData = open("sampleText.txt","r").read()
-    # dataArray = pullData.split('\n')
-    # xar = []
-    # yar = []
-    # for eachLine in dataArray:
-    #     if len(eachLine)>1:
-    #         x,y = eachLine.split(',')
-    #         xar.append(int(x))
-    #         yar.append(int(y))
-    # ax1.clear()
-    # ax1.plot(xar,yar)
-	ax1.plot(centers[0], centers[1])
-
-
-
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-v", "--video",
@@ -98,7 +81,7 @@ while True:
 		# find the largest contour in the mask, then use
 		# it to compute the minimum enclosing circle and
 		# centroid
-		print(len(cnts))
+		#print(len(cnts))
 		centers = [[],[]]
 		for c in cnts:
 		#c = max(cnts, key=cv2.contourArea)
@@ -117,8 +100,8 @@ while True:
 				cv2.circle(frame, center, 5, (0, 0, 255), -1)
 				centers[0].append(center[0])
 				centers[1].append(center[1])
-	ani = animation.FuncAnimation(fig, animate, interval=1000)
-	ani
+	# ani = animation.FuncAnimation(fig, animate, interval=1000)
+	# ani
 
 	# 			plt.scatter(center[0], center[1])
 	# 			plt.pause(0.05)
